@@ -1,0 +1,65 @@
+.navbar-custom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #000;
+  color: white;
+  padding: 12px 40px;
+  font-family: "Segoe UI", sans-serif;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 36px;
+  margin-right: 12px;
+}
+
+.brand {
+  font-weight: bold;
+  font-size: 18px;
+  color: #e73535;
+  letter-spacing: 1px;
+}
+
+.navbar-center {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+  font-weight: bold;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-center li {
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.navbar-center li:hover {
+  color: #ff4c4c;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.icon-img {
+  height: 22px;
+  width: 22px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.icon-img:hover {
+  transform: scale(1.15);
+}

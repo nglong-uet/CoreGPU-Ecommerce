@@ -1,0 +1,30 @@
+.banner-container {
+  position: relative;
+  width: 100%;
+  height: 600px; /* tuỳ chỉnh chiều cao */
+  overflow: hidden;
+}
+
+.banner-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transform: translateX(100%);
+  transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+}
+
+.banner-image.active {
+  opacity: 1;
+  transform: translateX(0);
+  z-index: 2;
+}
+
+.banner-image.exit-left {
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+}
