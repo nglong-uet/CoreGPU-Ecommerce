@@ -1,7 +1,13 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8080/api";
+const API_BASE = "http://localhost:8080/api";
 
-export const getAllProducts = () => {
-  return axios.get(`${BASE_URL}/products`);
+export const getAllProducts = async () => {
+  try {
+    const response = await axios.get(`${API_BASE}/products`);
+    return response.data;
+  } catch (err) {
+    console.error("Lỗi khi lấy danh sách sản phẩm:", err);
+    return [];
+  }
 };

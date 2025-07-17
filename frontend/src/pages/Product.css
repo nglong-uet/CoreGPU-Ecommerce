@@ -1,0 +1,85 @@
+.product-background {
+  background-color: #f3f3f3;
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+.product-wrapper {
+  background-color: #fff;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.03);
+}
+
+.product-card {
+  background-color: #fff;
+  min-height: 400px; 
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-image {
+  width: 100%;
+  height: 180px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.product-name {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  min-height: 2.5em; 
+}
+
+.product-desc {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-bottom: 10px;
+  flex-grow: 1; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-price {
+  font-size: 1.1rem;
+  margin-top: 10px;
+}
+
+
+.breadcrumb {
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  color: #6c757d;
+}
+
+.breadcrumb-link {
+  color: #6c757d;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.breadcrumb-link:hover {
+  color: #212529;
+  text-decoration: underline;
+}
+
+.breadcrumb span {
+  color: #6c757d;
+}
+
+.icon-home {
+  width: 18px;
+  height: 18px;
+  margin-right: 6px;
+  vertical-align: middle;
+}

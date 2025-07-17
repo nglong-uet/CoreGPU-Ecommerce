@@ -1,0 +1,89 @@
+.product-background {
+  background-color: #f3f3f3;
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+.product-wrapper {
+  background-color: #fff;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.03);
+}
+
+
+.container {
+  background-color: transparent;
+}
+
+.breadcrumb {
+  font-size: 0.95rem;
+  color: #6c757d;
+}
+
+.breadcrumb-link {
+  color: #6c757d;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.breadcrumb-link:hover {
+  color: #212529;
+  text-decoration: underline;
+}
+
+.icon-home {
+  width: 18px;
+  height: 18px;
+  margin-right: 6px;
+}
+
+.product-detail-container {
+  background-color: transparent;
+  padding: 0 10px;
+}
+
+.product-detail-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  margin-top: 16px;
+}
+
+.detail-image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.quantity-input {
+  width: 80px !important;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+}
+
+.btn-outline-dark {
+  background-color: transparent;
+  color: #333;
+  border: 2px solid #333;
+  transition: 0.3s;
+}
+
+.btn-outline-dark:hover {
+  background-color: #333;
+  color: white;
+}
+
+.btn-danger {
+  background-color: #ff4d4f;
+  border: none;
+  transition: 0.3s ease;
+}
+
+.btn-danger:hover {
+  background-color: #d9363e;
+}

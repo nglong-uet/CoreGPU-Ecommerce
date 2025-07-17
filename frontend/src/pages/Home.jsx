@@ -1,8 +1,10 @@
 // import { useEffect, useState } from "react";
 // import { getAllProducts } from "../services/api";
+import { Link } from "react-router-dom";
 import Banner from "../components/Banner";
 import Navbar from "../components/Navbar";
 import "./Home.css";
+import Footer from "../components/Footer";
 
 function Home() {
 
@@ -61,7 +63,9 @@ const handleViewMore = (item) => {
       <Banner />
       <section className="container mt-5">
         <h2 className="title-main">CARD ĐỒ HỌA</h2>
-        <p className="view-all">XEM TẤT CẢ CARD ĐỒ HỌA &gt;</p>
+        <div className="text-center mb-3">
+          <Link to="/products" className="view-all">XEM TẤT CẢ CARD ĐỒ HỌA &gt;</Link>
+        </div>
 
         <div className="row">
           {showcaseItems.map((item, idx) => (
@@ -157,6 +161,7 @@ const handleViewMore = (item) => {
         </div>
       </section>
 
+      <Footer /> 
     </>
   );
 }

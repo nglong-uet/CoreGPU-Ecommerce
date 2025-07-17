@@ -16,9 +16,22 @@
   align-items: center;
 }
 
-.logo {
-  height: 36px;
-  margin-right: 12px;
+.logo-text {
+  font-weight: 800;
+  font-size: 26px;
+  color: #ff4c4c;
+  letter-spacing: 1.5px;
+  background: linear-gradient(45deg, #ff4c4c, #ff7878);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 10px rgba(255, 76, 76, 0.6);
+  transition: transform 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
+}
+
+.logo-link {
+  text-decoration: none;
+  color: inherit;
 }
 
 .brand {
@@ -47,6 +60,19 @@
   color: #ff4c4c;
 }
 
+.navbar-center li a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  padding: 4px 6px;
+  transition: color 0.2s;
+}
+
+.navbar-center li a:hover {
+  color: #ff4c4c;
+  text-decoration: none;
+}
+
 .navbar-right {
   display: flex;
   align-items: center;
@@ -54,12 +80,13 @@
 }
 
 .icon-img {
-  height: 22px;
-  width: 22px;
+  width: 24px;
+  height: 24px;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.2s ease-in-out;
 }
 
 .icon-img:hover {
-  transform: scale(1.15);
+  transform: scale(1.2);
 }
+

@@ -1,0 +1,27 @@
+.agree-label {
+  display: flex;
+  align-items: flex-start; /* giúp text không bị đẩy xuống */
+  gap: 10px;
+  font-size: 14px;
+  color: white;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.agree-label input[type="checkbox"] {
+  margin-top: 3px;          
+  width: 18px;
+  height: 18px;
+  accent-color: #4e8cff;
+  cursor: pointer;
+}
+
+.agree-label a {
+  color: #4e8cff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+
+
+

@@ -15,11 +15,13 @@
 }
 
 .view-all {
-  text-align: center;
+  display: inline-block;
   text-decoration: underline;
-  font-weight: normal;
+  font-weight: bold;
   color: red;
-  margin-bottom: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 8px;
 }
 
 .card-box {

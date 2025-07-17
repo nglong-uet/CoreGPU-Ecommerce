@@ -1,0 +1,132 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+}
+
+.auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-box {
+  background-color: #222336;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  max-width: 400px;
+}
+
+.auth-box h3 {
+  text-align: center;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.auth-box p {
+  color: white;
+}
+
+.auth-box form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-box input {
+  padding: 12px;
+  margin-bottom: 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: #33354a;
+  color: #fff;
+}
+
+.auth-box input::placeholder {
+  color: #aaa;
+}
+
+.auth-box button {
+  padding: 12px;
+  background-color: #4e8cff;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.auth-box button:hover {
+  background-color: #3a6fd8;
+}
+
+.auth-box p {
+  margin-top: 16px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.auth-box a {
+  color: #4e8cff;
+  text-decoration: none;
+}
+
+
+.or-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 24px 0 16px;
+  position: relative;
+  font-size: 14px;
+  color: #ccc;
+}
+
+.or-divider::before,
+.or-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #444;
+  margin: 0 12px;
+}
+
+.social-login {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.social-login button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid #5c5e7a;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  color: #fff;
+  background-color: #2e2f45;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.social-login button:hover {
+  background-color: #3a3b55;
+  border-color: #7a7db0;
+}
+
+.social-login button img {
+  width: 20px;
+  height: 20px;
+}
+
+
