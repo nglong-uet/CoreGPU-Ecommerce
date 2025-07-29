@@ -90,3 +90,44 @@
   transform: scale(1.2);
 }
 
+
+.user-icon-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.user-dropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: white;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.user-dropdown a, 
+.user-dropdown button {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  width: 100%;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.user-dropdown a:hover, 
+.user-dropdown button:hover {
+  background-color: #f1f1f1;
+}
+
+
+
+
+
+

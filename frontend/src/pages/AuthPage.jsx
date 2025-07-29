@@ -1,19 +1,23 @@
 import React from 'react';
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
+import Navbar from "../components/Navbar";
+import Footer from '../components/Footer';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
-import './AuthPage.css';
+import '../style/AuthPage.css';
 
 export default function AuthPage() {
   return (
+    <>
+    <Navbar />
     <div className="auth-wrapper">
       <div className="auth-box">
         <Routes>
           <Route path="/login" element={
-            <>
-              <LoginForm />
-              <p>Chưa có tài khoản? <Link to="/auth/register">Đăng ký</Link></p>
-            </>
+          <>
+            <LoginForm />
+            <p>Chưa có tài khoản? <Link to="/auth/register">Đăng ký</Link></p>
+          </>
           } />
           <Route path="/register" element={
             <>
@@ -39,5 +43,7 @@ export default function AuthPage() {
         </div>
       </div>
     </div>
+    <Footer />
+    </>
   );
 }

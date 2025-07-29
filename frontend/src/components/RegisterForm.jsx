@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import './RegisterForm.css';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import '../style/RegisterForm.css';
 
 export default function RegisterForm() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
-    fullName: '', userName: '', email: '', password: '', agree: false
+    email: '', password: '', agree: false
   });
 
   const handleChange = (e) => {
@@ -14,32 +17,28 @@ export default function RegisterForm() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.agree) {
       alert("Bạn phải đồng ý với điều khoản để tiếp tục.");
       return;
     }
-    console.log('Registering:', form);
+    try {
+      const response = await axios.post('http://localhost:8080/api/auth/register', {
+        email: form.email,   
+        password: form.password
+      });
+      alert('Đăng ký thành công!');
+      navigate('/auth/login');
+    } catch (err) {
+      console.error(err.response?.data || err.message);
+      alert('Đăng ký thất bại: ' + (err.response?.data || err.message));
+    }
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <h3>Tạo tài khoản</h3>
-      <input
-        type="text"
-        name="fullName"
-        placeholder="Họ và tên"
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="text"
-        name="userName"
-        placeholder="Tên đăng nhập"
-        onChange={handleChange}
-        required
-      />
       <input
         type="email"
         name="email"

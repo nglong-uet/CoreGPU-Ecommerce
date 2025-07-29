@@ -1,0 +1,24 @@
+.breadcrumb {
+  font-size: 0.95rem;
+  color: #6c757d;
+  margin-bottom: 12px;
+}
+
+.breadcrumb-link {
+  color: #6c757d;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.breadcrumb-link:hover {
+  color: #212529;
+  text-decoration: underline;
+}
+
+.icon-home {
+  width: 18px;
+  height: 18px;
+  margin-right: 6px;
+  vertical-align: middle;
+}

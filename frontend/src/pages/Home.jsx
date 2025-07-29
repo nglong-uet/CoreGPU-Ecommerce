@@ -1,9 +1,7 @@
-// import { useEffect, useState } from "react";
-// import { getAllProducts } from "../services/api";
 import { Link } from "react-router-dom";
 import Banner from "../components/Banner";
 import Navbar from "../components/Navbar";
-import "./Home.css";
+import "../style/Home.css";
 import Footer from "../components/Footer";
 
 function Home() {
@@ -35,7 +33,7 @@ function Home() {
   },
   {
     name: "Creator GPU",
-    image: "./images/studio.png",
+    image: "./images/creator.png",
     effectClass: "render-effect",
     description: "Tối ưu hoá cho thiết kế và dựng phim.",
   },
@@ -89,8 +87,8 @@ const handleViewMore = (item) => {
         <h2 className="title-2 mb-4">DANH MỤC SẢN PHẨM</h2>
         <div className="row">
           {categories.map((cat, idx) => (
-            <div key={idx} className="col-md-3 mb-4">
-              <div className="category-card text-center">
+            <div key={idx} className="col-md-3 mb-4 d-flex">
+              <div className="category-card text-center w-100">
                 <div className="category-image-container">
                   <img
                     src={cat.image}
@@ -108,7 +106,7 @@ const handleViewMore = (item) => {
         </div>
       </section>
 
-      <section className="review-section mt-3 mb-5">
+      <section className="review-section mt-3 mb-4">
         <div className="container">
           <h2 className="title-2">REVIEW & ĐÁNH GIÁ</h2>
 
@@ -130,24 +128,24 @@ const handleViewMore = (item) => {
           </div>
 
           <div className="row mt-4">
-            <div className="col-md-4">
-              <div className="guide-box text-center">
+            <div className="col-md-4 d-flex">
+              <div className="guide-box text-center w-100">
                 <img src="./images/oc-guide.png" alt="OC Guide" className="guide-icon mb-3" />
                 <h5>Hướng dẫn ép xung GPU an toàn</h5>
                 <p>Học cách ép xung mà không làm giảm tuổi thọ GPU của bạn.</p>
               </div>
             </div>
 
-            <div className="col-md-4">
-              <div className="guide-box text-center">
+            <div className="col-md-4 d-flex">
+              <div className="guide-box text-center w-100">
                 <img src="./images/nvidia-vs-amd.png" alt="NVIDIA vs AMD" className="guide-icon mb-3" />
                 <h5>NVIDIA vs AMD: Chọn gì 2025?</h5>
                 <p>So sánh chi tiết giúp bạn đưa ra lựa chọn tối ưu trong năm nay.</p>
               </div>
             </div>
 
-            <div className="col-md-4">
-              <div className="guide-box text-center">
+            <div className="col-md-4 d-flex">
+              <div className="guide-box text-center w-100">
                 <img src="./images/gpu-health.png" alt="GPU Health" className="guide-icon mb-3" />
                 <h5>Kiểm tra sức khỏe GPU của bạn</h5>
                 <p>Hướng dẫn kiểm tra nhiệt độ, hiệu suất và độ ổn định GPU sau thời gian sử dụng.</p>

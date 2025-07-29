@@ -1,0 +1,135 @@
+.breadcrumb {
+  font-size: 0.95rem;
+  color: #6c757d;
+  margin-bottom: 12px;
+}
+
+.breadcrumb-link {
+  color: #6c757d;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.breadcrumb-link:hover {
+  color: #212529;
+  text-decoration: underline;
+}
+
+.icon-home {
+  width: 18px;
+  height: 18px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.profile-wrapper {
+  display: flex;
+  padding: 40px 60px;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fff;
+  color: #333;
+}
+
+.profile-sidebar {
+  width: 250px;
+  padding-right: 40px;
+  border-right: 1px solid #eee;
+}
+
+.profile-sidebar h2 {
+  margin-bottom: 5px;
+  font-size: 22px;
+  color: #1a1a1a;
+}
+
+.profile-sidebar p {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 30px;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar-menu li {
+  padding: 10px 0;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  border-left: 4px solid transparent;
+  padding-left: 10px;
+}
+
+.sidebar-menu li.active {
+  font-weight: bold;
+  border-left: 4px solid #008060;
+  background-color: #f4f6f8;
+}
+
+.sidebar-menu li.signout {
+  color: #d9534f;
+}
+
+.profile-main {
+  flex-grow: 1;
+  padding-left: 40px;
+}
+
+.profile-main h2 {
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+
+.section {
+  margin-bottom: 40px;
+}
+
+.section h3 {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.label {
+  font-weight: bold;
+  color: #555;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.change {
+  color: #007bff;
+  cursor: pointer;
+  font-size: 14px;
+  align-self: center;
+}
+
+.add-address-btn {
+  padding: 10px 20px;
+  background-color: teal;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+
+.add-address-btn:hover {
+  background-color: #00664c;
+}

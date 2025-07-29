@@ -1,0 +1,154 @@
+.product-background {
+  background-color: #f3f3f3;
+  min-height: 100vh;
+  padding: 40px 0;
+}
+
+.product-wrapper {
+  background-color: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.container {
+  background-color: transparent;
+  max-width: 1200px;
+}
+
+.breadcrumb {
+  font-size: 0.95rem;
+  color: #6c757d;
+  margin-bottom: 12px;
+}
+
+.breadcrumb-link {
+  color: #6c757d;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.breadcrumb-link:hover {
+  color: #212529;
+  text-decoration: underline;
+}
+
+.icon-home {
+  width: 18px;
+  height: 18px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.product-detail-container {
+  background-color: transparent;
+  padding: 0 10px;
+}
+
+.thumbnail-container {
+  margin-left: -10px; 
+  margin-right: -10px;
+}
+
+.img-thumbnail {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  margin-bottom: 8px;
+}
+
+.img-thumbnail:hover,
+.active-thumbnail {
+  border-color: #0d6efd;
+}
+
+.main-image-container {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.detail-image {
+  width: 100%;
+  max-height: 500px;
+  object-fit: contain;
+  border-radius: 8px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.product-info {
+  padding: 0 10px;
+}
+
+.product-info .price {
+  color: #dc3545;
+  font-size: 26px;
+  font-weight: bold;
+  margin: 16px 0;
+}
+
+.product-info p {
+  margin: 4px 0;
+}
+
+.quantity-input {
+  width: 70px !important;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  text-align: center;
+  margin-left: 10px;
+}
+
+.btn-outline-dark {
+  background-color: transparent;
+  color: #333;
+  border: 2px solid #333;
+  padding: 10px 20px;
+  transition: all 0.3s;
+  flex: 1;
+}
+
+.btn-outline-dark:hover {
+  background-color: #333;
+  color: white;
+}
+
+.btn-danger {
+  background-color: #ff4d4f;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  transition: all 0.3s;
+  flex: 1;
+}
+
+.btn-danger:hover {
+  background-color: #d9363e;
+}
+
+.product-table {
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.product-table th,
+.product-table td {
+  padding: 12px;
+  vertical-align: middle;
+  border: 1px solid #dee2e6;
+}
+
+.product-table th {
+  width: 28%;
+  background-color: #f8f9fa;
+}
+
+

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
+import ProductCard from "../components/ProductCard";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import axios from "axios";
-import "./Product.css";
+import "../style/ProductList.css";
 import { Link } from "react-router-dom";
 
 function Product() {
@@ -11,6 +12,9 @@ function Product() {
   const [sortOption, setSortOption] = useState("featured");
   const [priceFilter, setPriceFilter] = useState("");
   const [brandFilter, setBrandFilter] = useState("");
+  const [conditionFilter, setConditionFilter] = useState("");
+  const [memoryFilter, setMemoryFilter] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios.get("http://localhost:8080/api/products")
@@ -18,14 +22,16 @@ function Product() {
         setProducts(res.data);
         setOriginalProducts(res.data);
       })
-      .catch(err => console.error("Lỗi tải sản phẩm:", err));
+      .catch(err => console.error("Lỗi tải sản phẩm:", err))
+      .finally(() => setLoading(false));
   }, []);
+
 
   const handleSortChange = (e) => {
     const value = e.target.value;
     setSortOption(value);
 
-    let sortedProducts = [...products];
+    let sortedProducts = [...originalProducts];
 
     switch (value) {
       case "name-asc":
@@ -62,22 +68,44 @@ function Product() {
     }
   };
 
+  const filterByConditon = (products) => {
+    if (!conditionFilter) return products;
+    return products.filter(p => p.product_condition === conditionFilter);
+  }
+
+  const filterByMemory = (products) => {
+    if (!memoryFilter) return products;
+    return products.filter(p => p.memory === memoryFilter);
+  }
+
   const filterByBrand = (products) => {
     if (!brandFilter) return products;
     return products.filter(p => p.brand === brandFilter);
   };
 
   const applyAllFilters = () => {
-    let result = [...originalProducts];
+    let result = [...products];
     result = filterByPrice(result);
     result = filterByBrand(result);
+    result = filterByConditon(result);
+    result = filterByMemory(result);
     return result;
-  };
+};
+
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Đang tải...</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
       <Navbar />
-      <div className="product-background py-4">
+      <div className="product-background py-3">
         <div className="container">
           <div className="breadcrumb mb-3">
             <Link to="/" className="breadcrumb-link">
@@ -88,7 +116,7 @@ function Product() {
             <span>Sản phẩm</span>
           </div>
 
-          <div className="product-wrapper p-4 rounded shadow-sm bg-white">
+          <div className="product-wrapper p-4 rounded">
             <div className="row mb-4 g-2 filter-row">
               <div className="col">
                 <button className="btn btn-outline-dark w-100 d-flex align-items-center justify-content-center">
@@ -97,10 +125,14 @@ function Product() {
                 </button>
               </div>
               <div className="col">
-                <select className="form-select">
-                  <option>Tình trạng</option>
-                  <option>Mới</option>
-                  <option>Đã qua sử dụng</option>
+                <select
+                  className="form-select"
+                  value={conditionFilter}
+                  onChange={(e) => setConditionFilter(e.target.value)}
+                >
+                  <option value="">Tình trạng</option>
+                  <option value="Mới">Mới</option>
+                  <option value="Đã qua sử dụng">Đã qua sử dụng</option>
                 </select>
               </div>
               <div className="col">
@@ -126,12 +158,19 @@ function Product() {
                 </select>
               </div>
               <div className="col">
-                <select className="form-select">
-                  <option>Bộ nhớ</option>
-                  <option>4GB</option>
-                  <option>8GB</option>
-                  <option>12GB</option>
-                  <option>16GB</option>
+                <select
+                  className="form-select"
+                  value={memoryFilter}
+                  onChange={(e) => setMemoryFilter(e.target.value)}
+                >
+                  <option value="">Bộ nhớ</option>
+                  <option value="4GB">4GB</option>
+                  <option value="6GB">6GB</option>
+                  <option value="8GB">8GB</option>
+                  <option value="10GB">10GB</option>
+                  <option value="12GB">12GB</option>
+                  <option value="16GB">16GB</option>
+                  <option value="24GB">24GB</option>
                 </select>
               </div>
               <div className="col text-end">
@@ -145,17 +184,8 @@ function Product() {
             </div>
 
             <div className="row">
-              {applyAllFilters().map((product, idx) => (
-                <div key={idx} className="col-lg-3 col-md-4 col-sm-6 mb-4">
-                  <Link to={`/products/${product.id}`} className="text-decoration-none text-dark">
-                    <div className="product-card text-center p-3">
-                      <img src={product.imageUrl} alt={product.name} className="product-image mb-3" />
-                      <h5 className="product-name">{product.name}</h5>
-                      <p className="product-desc">{product.description}</p>
-                      <p className="product-price text-danger fw-bold">{product.price?.toLocaleString()} ₫</p>
-                    </div>
-                  </Link>
-                </div>
+              {applyAllFilters().map((product) => (
+                <ProductCard key={product.id} product={product} />
               ))}
             </div>
           </div>
