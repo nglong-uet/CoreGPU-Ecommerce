@@ -4,6 +4,11 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
+
+export const loginUser = (data) => axios.post('/api/auth/login', data);
+export const getCart = (userId) => axios.get(`/api/cart/user/${userId}`);
+export const addToCart = (payload) => axios.post('/api/cart/add', payload);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

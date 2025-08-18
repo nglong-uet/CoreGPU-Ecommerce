@@ -1,0 +1,177 @@
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.breadcrumb {
+  font-size: 0.95rem;
+  color: #6c757d;
+  margin-bottom: 16px;
+}
+
+.breadcrumb-link {
+  color: #6c757d;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.breadcrumb-link:hover {
+  color: #000;
+  text-decoration: underline;
+}
+
+.icon-home {
+  width: 18px;
+  height: 18px;
+}
+
+h3, h5 {
+  color: #222;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+input, textarea, select {
+  border: 1px solid #d0d0d0;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 15px;
+  width: 100%;
+  transition: all 0.25s ease;
+  background-color: #fff;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: #00aa55;
+  outline: none;
+  box-shadow: 0 0 6px rgba(0, 170, 85, 0.2);
+}
+
+textarea {
+  resize: none;
+  min-height: 90px;
+}
+
+button {
+  font-size: 16px;
+  padding: 12px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+button.btn-success {
+  background-color: #28a745;
+  border: none;
+  color: white;
+}
+
+button.btn-success:hover {
+  background-color: #218838;
+  box-shadow: 0 4px 12px rgba(33, 136, 56, 0.25);
+}
+
+.btn-outline-secondary {
+  border: 1px solid #ccc;
+  color: #333;
+  background-color: white;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #f1f1f1;
+}
+
+.checkout-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.order-summary hr {
+  margin: 16px 0;
+  border-color: #ddd;
+}
+
+.fs-5 {
+  font-size: 1.25rem;
+}
+
+.fw-bold {
+  font-weight: 600;
+}
+
+.fw-semibold {
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .row {
+    flex-direction: column;
+  }
+
+  .col-md-6 {
+    width: 100%;
+    margin-bottom: 24px;
+  }
+}
+
+.checkout-modern {
+  background-color: #f8f9fa;
+  border-radius: 16px;
+}
+
+.card {
+  border-radius: 16px;
+  border: none;
+  background-color: #fff;
+}
+
+input, select, textarea {
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #0d68f1;
+  box-shadow: 0 0 6px rgba(13, 110, 253, 0.25);
+}
+
+.btn-primary {
+  background-color: #0d68f1;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: rgb(10, 84, 195);
+}
+
+.checkout-item-modern {
+  padding: 8px 0;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.form-check-inline {
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+  font-size: 0.95rem;
+}
+
+.form-check-input {
+  margin-right: 6px;
+  vertical-align: middle;
+  transform: scale(0.75); 
+  cursor: pointer;
+}
+
+.form-check-label {
+  margin-bottom: 0;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+

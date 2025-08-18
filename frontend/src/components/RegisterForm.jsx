@@ -24,8 +24,8 @@ export default function RegisterForm() {
       return;
     }
     try {
-      const response = await axios.post('http://localhost:8080/api/auth/register', {
-        email: form.email,   
+      await axios.post('http://localhost:8080/api/auth/register', {
+        email: form.email,
         password: form.password
       });
       alert('Đăng ký thành công!');

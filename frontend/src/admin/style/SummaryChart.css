@@ -1,0 +1,166 @@
+.dashboard-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  margin-bottom: 10px;
+  gap: 20px;
+}
+
+.summary-card,
+.products-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-placeholder {
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9fafb;
+  border-radius: 8px;
+  color: #999;
+  font-style: italic;
+}
+
+.products-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.summary-header,
+.products-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.summary-header h5,
+.products-header h5 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.summary-legend {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #444;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.order {
+  background-color: #10b981;
+}
+
+.income {
+  background-color: #84cc16;
+}
+
+.time-filter {
+  padding: 4px 8px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: white;
+}
+
+.products-item {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.products-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.products-info img {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+}
+
+.products-name {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.products-id {
+  font-size: 13px;
+  color: #777;
+}
+
+.sales-tag {
+  background-color: #f3f4f6;
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 500;
+  color: #333;
+}
+
+.dots {
+  font-size: 20px;
+  color: #bbb;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.pagination {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.pagination button {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex; 
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d1d5db;
+  background: white;
+  cursor: pointer;
+  color: #3b82f6;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+  padding: 0; 
+}
+
+
+.pagination button:disabled {
+  cursor: not-allowed;
+  color: #9ca3af;
+  border-color: #e5e7eb;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #f3f4f6;
+}

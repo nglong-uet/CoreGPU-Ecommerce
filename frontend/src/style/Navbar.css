@@ -1,9 +1,17 @@
+:root {
+  --primary-color: #ff4c4c;
+  --secondary-color: #ff7878;
+  --text-color: white;
+  --dropdown-bg: white;
+  --shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
 .navbar-custom {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #000;
-  color: white;
+  color: var(--text-color);
   padding: 12px 40px;
   font-family: "Segoe UI", sans-serif;
   position: sticky;
@@ -19,26 +27,18 @@
 .logo-text {
   font-weight: 800;
   font-size: 26px;
-  color: #ff4c4c;
   letter-spacing: 1.5px;
-  background: linear-gradient(45deg, #ff4c4c, #ff7878);
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   text-shadow: 0 0 10px rgba(255, 76, 76, 0.6);
-  transition: transform 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .logo-link {
   text-decoration: none;
   color: inherit;
-}
-
-.brand {
-  font-weight: bold;
-  font-size: 18px;
-  color: #e73535;
-  letter-spacing: 1px;
 }
 
 .navbar-center {
@@ -53,24 +53,18 @@
 
 .navbar-center li {
   cursor: pointer;
-  transition: color 0.2s;
-}
-
-.navbar-center li:hover {
-  color: #ff4c4c;
 }
 
 .navbar-center li a {
-  color: white;
+  color: var(--text-color);
   text-decoration: none;
   display: block;
   padding: 4px 6px;
-  transition: color 0.2s;
+  transition: all 0.2s ease-in-out;
 }
 
 .navbar-center li a:hover {
-  color: #ff4c4c;
-  text-decoration: none;
+  color: var(--primary-color);
 }
 
 .navbar-right {
@@ -83,13 +77,12 @@
   width: 24px;
   height: 24px;
   cursor: pointer;
-  transition: transform 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .icon-img:hover {
   transform: scale(1.2);
 }
-
 
 .user-icon-wrapper {
   position: relative;
@@ -100,9 +93,9 @@
   position: absolute;
   right: 0;
   top: 100%;
-  background-color: white;
+  background-color: var(--dropdown-bg);
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: var(--shadow);
   z-index: 1;
   border-radius: 4px;
   overflow: hidden;
@@ -114,11 +107,10 @@
   padding: 12px 16px;
   text-decoration: none;
   display: block;
-  text-align: left;
   width: 100%;
   border: none;
-  background: none;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
 .user-dropdown a:hover, 
@@ -126,8 +118,53 @@
   background-color: #f1f1f1;
 }
 
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
 
+.search-form {
+  display: flex;
+  align-items: center;
+}
 
+.search-input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-right: 5px;
+  width: 200px;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
 
+.search-input:focus {
+  outline: none;
+  border-color: #007bff;
+  width: 250px;
+}
 
+.search-submit-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
 
+.cart-icon-wrapper {
+  position: relative;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1;
+}

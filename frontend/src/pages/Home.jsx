@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
 import Banner from "../components/Banner";
-import Navbar from "../components/Navbar";
 import "../style/Home.css";
-import Footer from "../components/Footer";
+import usePageTitle from '../hooks/usePageTitle';
 
 function Home() {
-
+  usePageTitle("Trang chủ | CoreGPU - Web bán card đồ hoạ");
   const showcaseItems = [
     {
       name: "NVIDIA",
@@ -57,7 +56,6 @@ const handleViewMore = (item) => {
 
   return (
     <>
-			<Navbar />
       <Banner />
       <section className="container mt-5">
         <h2 className="title-main">CARD ĐỒ HỌA</h2>
@@ -158,8 +156,6 @@ const handleViewMore = (item) => {
           </div>
         </div>
       </section>
-
-      <Footer /> 
     </>
   );
 }

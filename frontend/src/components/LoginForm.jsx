@@ -14,6 +14,7 @@ export default function LoginForm() {
     axios.post('http://localhost:8080/api/auth/login', { email, password })
       .then(res => {
         localStorage.setItem("user", JSON.stringify(res.data));
+        window.dispatchEvent(new Event("userChanged"));
         navigate('/');
       })
       .catch(err => {

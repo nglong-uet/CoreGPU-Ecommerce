@@ -1,15 +1,14 @@
 import React from 'react';
 import { Routes, Route, Navigate, Link } from 'react-router-dom';
-import Navbar from "../components/Navbar";
-import Footer from '../components/Footer';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
 import '../style/AuthPage.css';
+import usePageTitle from '../hooks/usePageTitle';
 
-export default function AuthPage() {
+function AuthPage() {
+  usePageTitle("Đăng nhập/Đăng ký")
   return (
     <>
-    <Navbar />
     <div className="auth-wrapper">
       <div className="auth-box">
         <Routes>
@@ -43,7 +42,8 @@ export default function AuthPage() {
         </div>
       </div>
     </div>
-    <Footer />
     </>
   );
 }
+
+export default AuthPage;

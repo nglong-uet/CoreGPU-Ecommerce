@@ -108,11 +108,31 @@
   margin-bottom: 5px;
 }
 
-.change {
-  color: #007bff;
-  cursor: pointer;
+.change button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 4px;
   font-size: 14px;
-  align-self: center;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.change button:hover {
+  background-color: #0056b3; 
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.greeting {
+  font-weight: 500;
+  margin-right: 8px;
 }
 
 .add-address-btn {
@@ -132,4 +152,32 @@
 
 .add-address-btn:hover {
   background-color: #00664c;
+}
+
+.order-status {
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 20px;
+  text-transform: capitalize;
+}
+
+.status-delivered {
+  background-color: #28a745;
+  color: white;
+}
+
+.status-processing {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.status-cancelled {
+  background-color: #dc3545;
+  color: white;
+}
+
+.status-default {
+  background-color: #6c757d;
+  color: white;
 }

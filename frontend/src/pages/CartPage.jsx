@@ -1,38 +1,69 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import "../style/CartPage.css";
+import usePageTitle from '../hooks/usePageTitle';
 
 function CartPage() {
+  usePageTitle("Giỏ hàng | CoreGPU");
+
   const [items, setItems] = useState([]);
   const [coupon, setCoupon] = useState("");
   const [shippingFee, setShippingFee] = useState(0);
   const user = JSON.parse(localStorage.getItem("user"));
+  const navigate = useNavigate();
+  const [reloadTrigger, setReloadTrigger] = useState(Date.now());
+
+  useEffect(() => {
+    const latest = localStorage.getItem("cartUpdated");
+    if (latest) {
+      setReloadTrigger(Number(latest));
+    }
+  }, []);
 
   useEffect(() => {
     if (user?.id) {
       axios.get(`http://localhost:8080/api/cart/user/${user.id}`)
         .then((res) => {
           setItems(res.data);
+
+          const totalQuantity = res.data.reduce((sum, item) => sum + item.quantity, 0);
+          localStorage.setItem("cartQuantity", totalQuantity);
         })
         .catch((err) => {
           console.error("Không lấy được giỏ hàng:", err);
         });
     }
-  }, [user]);
+  }, [reloadTrigger, user?.id]);
 
-  const updateQuantity = (index, delta) => {
+  const updateQuantity = async (index, delta) => {
     const newItems = [...items];
-    newItems[index].quantity = Math.max(1, newItems[index].quantity + delta);
-    setItems(newItems);
+    const item = newItems[index];
+
+    try {
+      await axios.post("http://localhost:8080/api/cart/add", {
+        userId: user.id,
+        productId: item.product.id,
+        quantity: delta,
+      });
+      localStorage.setItem("cartUpdated", Date.now()); 
+      setReloadTrigger(Date.now());
+    } catch (err) {
+      console.error("Lỗi cập nhật số lượng:", err);
+    }
   };
 
-  const removeItem = (index) => {
-    const newItems = [...items];
-    newItems.splice(index, 1);
-    setItems(newItems);
+  const removeItem = async (index) => {
+    const item = items[index];
+    try {
+      await axios.delete(`http://localhost:8080/api/cart/remove`, {
+        params: { userId: user.id, productId: item.product.id }
+      });
+      setReloadTrigger(Date.now());
+    } catch (err) {
+      console.error("Lỗi xoá:", err);
+    }
   };
 
   const getSubtotal = () => {
@@ -45,7 +76,7 @@ function CartPage() {
 
   useEffect(() => {
     const subtotal = items.reduce((total, item) => total + item.product.price * item.quantity, 0);
-    if (subtotal > 5000000) {
+    if (subtotal > 10000000) {
       setShippingFee(0);
     } else if (subtotal === 0) {
       setShippingFee(0);
@@ -54,10 +85,8 @@ function CartPage() {
     }
   }, [items]);
 
-
   return (
     <>
-      <Navbar />
       <div className="container py-3">
         <div className="breadcrumb mb-3">
           <Link to="/" className="breadcrumb-link">
@@ -85,12 +114,18 @@ function CartPage() {
                   <tr key={idx}>
                     <td className="text-start d-flex align-items-center gap-3">
                       <img
-                        src={item.product.thumbnail || "/images/default.png"}
+                        src={
+                          item.product.images?.find(img => img.thumbnail)?.imageUrl
+                            ? `http://localhost:8080${item.product.images.find(img => img.thumbnail).imageUrl}`
+                            : "/images/default.png"
+                        }
                         alt={item.product.name}
-                        style={{ width: "80px", height: "80px", objectFit: "cover" }}
+                        style={{ width: "100px", height: "100px", objectFit: "cover" }}
                       />
+
                       <div>
                         <strong>{item.product.name}</strong><br />
+                        <p>{item.product.memory}</p>
                       </div>
                     </td>
                     <td>{item.product.price.toLocaleString("vi-VN")}₫</td>
@@ -101,7 +136,6 @@ function CartPage() {
                         <button className="btn btn-sm btn-outline-secondary" onClick={() => updateQuantity(idx, 1)}>+</button>
                       </div>
                     </td>
-                    <td>{item.product.shipping || "FREE"}</td>
                     <td>{(item.product.price * item.quantity).toLocaleString("vi-VN")}₫</td>
                     <td>
                       <button className="btn btn-sm btn-outline-danger" onClick={() => removeItem(idx)}>🗑️</button>
@@ -139,12 +173,16 @@ function CartPage() {
                 <span>Thành tiền</span>
                 <span>{getGrandTotal().toLocaleString("vi-VN")}₫</span>
               </div>
-              <button className="btn btn-success w-100 mt-3">Xác nhận</button>
+              <button
+                className="btn btn-success w-100 mt-3"
+                onClick={() => navigate("/checkout")}
+              >
+                Mua ngay
+              </button>
             </div>
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

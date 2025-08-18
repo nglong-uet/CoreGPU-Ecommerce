@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import axios from "axios";
 import "../style/ProductList.css";
 import { Link } from "react-router-dom";
+import usePageTitle from "../hooks/usePageTitle";
 
 function Product() {
+  usePageTitle("Danh sách sản phẩm | CoreGPU");
+
   const [products, setProducts] = useState([]);
   const [originalProducts, setOriginalProducts] = useState([]);
   const [sortOption, setSortOption] = useState("featured");
@@ -104,7 +105,6 @@ function Product() {
 
   return (
     <>
-      <Navbar />
       <div className="product-background py-3">
         <div className="container">
           <div className="breadcrumb mb-3">
@@ -191,7 +191,6 @@ function Product() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

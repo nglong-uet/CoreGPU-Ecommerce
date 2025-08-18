@@ -1,14 +1,13 @@
 import React from 'react';
 import '../style/AddAddressPage.css';
 import { Link } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import usePageTitle from '../hooks/usePageTitle';
 
 export default function AddAddressPage() {
+  usePageTitle("Thêm địa chỉ | CoreGPU");
   const user = JSON.parse(localStorage.getItem("user"));
   return (
     <>
-      <Navbar />
       <div className="container">
         <div className="breadcrumb mb-3 mt-3">
           <Link to="/" className="breadcrumb-link">
@@ -92,7 +91,6 @@ export default function AddAddressPage() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import "../style/ProductDetail.css";
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
+import usePageTitle from "../hooks/usePageTitle";
 
 function ProductDetail() {
+  usePageTitle("Chi tiết sản phẩm | CoreGPU");
+
   const { id } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
@@ -42,6 +43,7 @@ function ProductDetail() {
         productId: product.id,
         quantity: quantity,
       });
+      localStorage.setItem("cartUpdated", Date.now());
       toast.success("Đã thêm vào giỏ hàng");
     } catch (err) {
       console.error("Lỗi thêm vào giỏ:", err);
@@ -63,6 +65,7 @@ function ProductDetail() {
         productId: product.id,
         quantity: quantity,
       });
+      localStorage.setItem("cartUpdated", Date.now());
       toast.success("Sản phẩm đã được thêm. Chuyển đến giỏ hàng...");
       setTimeout(() => navigate("/cart"), 1000);
     } catch (err) {
@@ -71,12 +74,10 @@ function ProductDetail() {
     }
   };
 
-
   if (!product) return <div className="text-center mt-5">Đang tải...</div>;
 
   return (
     <>
-      <Navbar />
       <div className="product-background py-3">
         <div className="container">
           <div className="breadcrumb mb-3">
@@ -177,7 +178,6 @@ function ProductDetail() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

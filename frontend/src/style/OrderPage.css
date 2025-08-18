@@ -1,0 +1,44 @@
+.breadcrumb-link {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.card {
+  background-color: #fff;
+}
+
+.nav-link {
+  color: #000;
+  text-decoration: none;
+}
+.nav-link:hover {
+  text-decoration: underline;
+}
+
+.order-status {
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 20px;
+  text-transform: capitalize;
+}
+
+.status-delivered {
+  background-color: #28a745;
+  color: white;
+}
+
+.status-processing {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.status-cancelled {
+  background-color: #dc3545;
+  color: white;
+}
+
+.status-default {
+  background-color: #6c757d;
+  color: white;
+}
