@@ -1,27 +1,24 @@
-# Build stage
+# Stage 1: Build ứng dụng
 FROM eclipse-temurin:21-jdk AS builder
+
 WORKDIR /workspace/app
 
-# Copy chỉ các file cần thiết để tối ưu cache layer
-COPY mvnw .
-COPY .mvn/ .mvn
-COPY pom.xml .
-COPY src src
+# Copy toàn bộ source code vào container
+COPY . .
 
-# Build ứng dụng (sử dụng cache Maven)
+# Gán quyền thực thi cho mvnw (fix lỗi Permission denied)
+RUN chmod +x mvnw
+
+# Build ứng dụng (bỏ qua test cho nhanh)
 RUN ./mvnw clean package -DskipTests
 
-# Runtime stage
+# Stage 2: Runtime
 FROM eclipse-temurin:21-jre
+
 WORKDIR /app
 
-# Copy file JAR từ stage builder
+# Copy file JAR từ stage build
 COPY --from=builder /workspace/app/target/*.jar app.jar
 
-# Cấu hình thời gian (đặt lại thành Asia/Ho_Chi_Minh)
-ENV TZ=Asia/Ho_Chi_Minh
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
-# Port và entrypoint
-EXPOSE 8080
+# Chạy ứng dụng
 ENTRYPOINT ["java", "-jar", "app.jar"]
