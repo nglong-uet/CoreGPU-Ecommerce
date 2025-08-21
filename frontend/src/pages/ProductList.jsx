@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import ProductCard from "../components/ProductCard";
 import axios from "axios";
 import "../style/ProductList.css";
 import { Link } from "react-router-dom";
 import usePageTitle from "../hooks/usePageTitle";
 
-function Product() {
+function ProductList() {
   usePageTitle("Danh sách sản phẩm | CoreGPU");
 
-  const [products, setProducts] = useState([]);
   const [originalProducts, setOriginalProducts] = useState([]);
   const [sortOption, setSortOption] = useState("featured");
   const [priceFilter, setPriceFilter] = useState("");
@@ -16,82 +15,94 @@ function Product() {
   const [conditionFilter, setConditionFilter] = useState("");
   const [memoryFilter, setMemoryFilter] = useState("");
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 20;
 
   useEffect(() => {
     axios.get("http://localhost:8080/api/products")
       .then(res => {
-        setProducts(res.data);
         setOriginalProducts(res.data);
       })
       .catch(err => console.error("Lỗi tải sản phẩm:", err))
       .finally(() => setLoading(false));
   }, []);
 
-
   const handleSortChange = (e) => {
     const value = e.target.value;
     setSortOption(value);
-
-    let sortedProducts = [...originalProducts];
-
-    switch (value) {
-      case "name-asc":
-        sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
-        break;
-      case "price-asc":
-        sortedProducts.sort((a, b) => a.price - b.price);
-        break;
-      case "price-desc":
-        sortedProducts.sort((a, b) => b.price - a.price);
-        break;
-      default:
-        sortedProducts = [...originalProducts];
-        break;
-    }
-
-    setProducts(sortedProducts);
+    setCurrentPage(1);
   };
 
-  const filterByPrice = (products) => {
+
+  const applyAllFilters = useCallback(() => {
+    let result = [...originalProducts];
+
     switch (priceFilter) {
       case "under-1m":
-        return products.filter(p => p.price < 1_000_000);
+        result = result.filter(p => p.price < 1_000_000);
+        break;
       case "1m-3m":
-        return products.filter(p => p.price >= 1_000_000 && p.price <= 3_000_000);
+        result = result.filter(p => p.price >= 1_000_000 && p.price <= 3_000_000);
+        break;
       case "3m-5m":
-        return products.filter(p => p.price > 3_000_000 && p.price <= 5_000_000);
+        result = result.filter(p => p.price > 3_000_000 && p.price <= 5_000_000);
+        break;
       case "5m-10m":
-        return products.filter(p => p.price > 5_000_000 && p.price <= 10_000_000);
+        result = result.filter(p => p.price > 5_000_000 && p.price <= 10_000_000);
+        break;
       case "above-10m":
-        return products.filter(p => p.price > 10_000_000);
+        result = result.filter(p => p.price > 10_000_000);
+        break;
       default:
-        return products;
+        break;
     }
-  };
 
-  const filterByConditon = (products) => {
-    if (!conditionFilter) return products;
-    return products.filter(p => p.product_condition === conditionFilter);
-  }
+    if (brandFilter) {
+      result = result.filter(p => p.brand === brandFilter);
+    }
+ 
+    if (conditionFilter) {
+      result = result.filter(p => p.product_condition === conditionFilter);
+    }
 
-  const filterByMemory = (products) => {
-    if (!memoryFilter) return products;
-    return products.filter(p => p.memory === memoryFilter);
-  }
-
-  const filterByBrand = (products) => {
-    if (!brandFilter) return products;
-    return products.filter(p => p.brand === brandFilter);
-  };
-
-  const applyAllFilters = () => {
-    let result = [...products];
-    result = filterByPrice(result);
-    result = filterByBrand(result);
-    result = filterByConditon(result);
-    result = filterByMemory(result);
+    if (memoryFilter) {
+      result = result.filter(p => p.memory === memoryFilter);
+    }
+    
+    switch (sortOption) {
+      case "name-asc":
+        result.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case "price-asc":
+        result.sort((a, b) => a.price - b.price);
+        break;
+      case "price-desc":
+        result.sort((a, b) => b.price - a.price);
+        break;
+      default:
+        break;
+    }
+    
     return result;
-};
+  }, [originalProducts, sortOption, priceFilter, brandFilter, conditionFilter, memoryFilter]);
+
+  const filteredProducts = useMemo(() => applyAllFilters(), [applyAllFilters]);
+
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const pageNumbers = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [priceFilter, brandFilter, conditionFilter, memoryFilter]);
 
   if (loading) {
     return (
@@ -183,11 +194,93 @@ function Product() {
               </div>
             </div>
 
-            <div className="row">
-              {applyAllFilters().map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
+            <div className="row mb-4">
+              <div className="col">
+                <p className="mb-0 text-muted">
+                  Hiển thị {indexOfFirstProduct + 1}-{Math.min(indexOfLastProduct, filteredProducts.length)} của {filteredProducts.length} sản phẩm
+                </p>
+              </div>
             </div>
+
+            <div className="row mb-4">
+              {currentProducts.length > 0 ? (
+                currentProducts.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))
+              ) : (
+                <div className="col-12 text-center py-5">
+                  <h4>Không tìm thấy sản phẩm nào phù hợp</h4>
+                  <p className="text-muted">Hãy thử điều chỉnh bộ lọc của bạn</p>
+                </div>
+              )}
+            </div>
+
+            {totalPages > 1 && (
+              <nav aria-label="Page navigation">
+                <ul className="pagination justify-content-center">
+                  <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                    <button 
+                      className="page-link" 
+                      onClick={() => paginate(currentPage - 1)}
+                      disabled={currentPage === 1}
+                    >
+                      &laquo;
+                    </button>
+                  </li>
+
+                  {currentPage > 3 && (
+                    <>
+                      <li className="page-item">
+                        <button className="page-link" onClick={() => paginate(1)}>1</button>
+                      </li>
+                      {currentPage > 4 && (
+                        <li className="page-item disabled">
+                          <span className="page-link">...</span>
+                        </li>
+                      )}
+                    </>
+                  )}
+
+                  {pageNumbers.map(number => {
+                    if (number >= currentPage - 2 && number <= currentPage + 2) {
+                      return (
+                        <li key={number} className={`page-item ${currentPage === number ? 'active' : ''}`}>
+                          <button className="page-link" onClick={() => paginate(number)}>
+                            {number}
+                          </button>
+                        </li>
+                      );
+                    }
+                    return null;
+                  })}
+                  
+                  {currentPage < totalPages - 2 && (
+                    <>
+                      {currentPage < totalPages - 3 && (
+                        <li className="page-item disabled">
+                          <span className="page-link">...</span>
+                        </li>
+                      )}
+                      <li className="page-item">
+                        <button className="page-link" onClick={() => paginate(totalPages)}>
+                          {totalPages}
+                        </button>
+                      </li>
+                    </>
+                  )}
+                  
+                  <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                    <button 
+                      className="page-link" 
+                      onClick={() => paginate(currentPage + 1)}
+                      disabled={currentPage === totalPages}
+                    >
+                      &raquo;
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+            )}
           </div>
         </div>
       </div>
@@ -195,4 +288,4 @@ function Product() {
   );
 }
 
-export default Product;
+export default ProductList;

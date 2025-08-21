@@ -12,7 +12,6 @@
 .product-card {
   background-color: #fff;
   min-height: 400px; 
-  padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transition: 0.3s;
@@ -45,4 +44,36 @@
   height: 18px;
   margin-right: 6px;
   vertical-align: middle;
+}
+
+.pagination {
+  margin: 20px 0 0;
+}
+
+.page-item.active .page-link {
+  background-color: #212529;
+  border-color: #212529;
+}
+
+.page-link {
+  color: #212529;
+  border: 1px solid #dee2e6;
+  padding: 0.5rem 0.75rem;
+}
+
+.page-link:hover {
+  color: #212529;
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+
+.page-item.disabled .page-link {
+  color: #6c757d;
+  pointer-events: none;
+  background-color: #fff;
+  border-color: #dee2e6;
+}
+
+.text-muted {
+  font-size: 0.9rem;
 }

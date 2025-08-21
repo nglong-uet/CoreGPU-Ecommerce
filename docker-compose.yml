@@ -1,34 +1,32 @@
 services:
   mysql:
-    image: mysql:8.0
+    image: mysql:8
     container_name: mysql_container
     environment:
-      MYSQL_ROOT_PASSWORD: LONGnguyen2004
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: coregpu
       MYSQL_USER: coregpu
       MYSQL_PASSWORD: coregpu
     ports:
-      - "3307:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      - "3306:3306"
+    networks:
+      - coregpu-net
 
   backend:
-    build: ./backend
+    build: .
     container_name: backend_container
-    depends_on:
-      mysql:
-        condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/coregpu?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
-      SPRING_DATASOURCE_USERNAME: coregpu
-      SPRING_DATASOURCE_PASSWORD: coregpu
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: coregpu
+      DB_USER: coregpu
+      DB_PASSWORD: coregpu
     ports:
       - "8080:8080"
+    depends_on:
+      - mysql
+    networks:
+      - coregpu-net
 
-volumes:
-  mysql_data:
+networks:
+  coregpu-net:

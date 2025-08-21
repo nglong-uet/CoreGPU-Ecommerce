@@ -9,11 +9,48 @@ import usePageTitle from "../hooks/usePageTitle";
 function ProductDetail() {
   usePageTitle("Chi tiết sản phẩm | CoreGPU");
 
-  const { id } = useParams();
+  const { id } = useParams(); 
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [mainImage, setMainImage] = useState("");
+  const [reviews, setReviews] = useState([]);
+  const [newReview, setNewReview] = useState("");
+  const [rating, setRating] = useState(5);
+  const [visibleReviews, setVisibleReviews] = useState(3);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/api/reviews/products/${id}`)
+      .then((res) => setReviews(res.data))
+      .catch((err) => console.error("Lỗi khi tải đánh giá:", err));
+  }, [id]);
+
+  const handleSubmitReview = async () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+      alert("Vui lòng đăng nhập trước");
+      navigate("/auth/login");
+      return;
+    }
+
+    try {
+      const res = await axios.post("http://localhost:8080/api/reviews/add", {
+        userId: user.id,
+        productId: product.id,
+        rating,
+        comment: newReview,
+      });
+
+      setReviews([...reviews, res.data]);
+      setNewReview("");
+      setRating(5);
+      toast.success("Đánh giá đã được gửi");
+    } catch (err) {
+      console.error("Lỗi gửi đánh giá:", err);
+      toast.error("Không thể gửi đánh giá");
+    }
+  };
 
   useEffect(() => {
     axios
@@ -174,6 +211,65 @@ function ProductDetail() {
                   </button>
                 </div>
               </div>
+            </div>
+          </div>
+
+          <div className="product-review mt-5">
+            <h3 className="review-title">Đánh giá sản phẩm</h3>
+
+            {reviews.length === 0 ? (
+              <p className="text-muted">Chưa có đánh giá nào.</p>
+            ) : (
+              <div className="review-list">
+                {reviews.slice(0, visibleReviews).map((r, i) => (
+                  <div key={i} className="review-item">
+                    <div className="review-header">
+                      <strong>{r.userName || "Người dùng ẩn danh"}</strong>
+                      <span className="review-rating">{"⭐".repeat(r.rating)}</span>
+                    </div>
+                    <p className="review-comment">{r.comment}</p>
+                    <small className="text-muted">
+                      {new Date(r.createdAt).toLocaleDateString()}
+                    </small>
+                  </div>
+                ))}
+                {visibleReviews < reviews.length && (
+                  <button
+                    className="btn btn-link p-0 mt-2"
+                    onClick={() => setVisibleReviews(visibleReviews + 3)}
+                  >
+                    Xem thêm
+                  </button>
+                )}
+              </div>
+            )}
+
+            <div className="review-form mt-4">
+              <h5>Viết đánh giá của bạn</h5>
+              <div className="mb-3">
+                <label className="d-block mb-2">Chọn số sao:</label>
+                <div className="star-rating">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <span
+                      key={star}
+                      className={`star ${star <= rating ? "filled" : ""}`}
+                      onClick={() => setRating(star)}
+                    >
+                      ★
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <textarea
+                className="form-control mb-2"
+                rows="3"
+                placeholder="Nhập đánh giá..."
+                value={newReview}
+                onChange={(e) => setNewReview(e.target.value)}
+              ></textarea>
+              <button className="btn btn-primary" onClick={handleSubmitReview}>
+                Gửi đánh giá
+              </button>
             </div>
           </div>
         </div>

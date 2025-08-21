@@ -18,6 +18,9 @@ import ThankYouPage from "./pages/ThankYouPage";
 import ProductManagement from './admin/ProductManagement';
 import CustomerManagement from './admin/CustomerManagement';
 import OrderManagement from './admin/OrderManagement';
+import ReviewsPage from './pages/ReviewsPage';
+import SupportPage from './pages/SupportPage';
+import Setting from './admin/Setting';
 
 function App() {
   return (
@@ -36,6 +39,8 @@ function App() {
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/orders" element={<OrderPage />} />
             <Route path="/thankyou" element={<ThankYouPage />}/>
+            <Route path="/reviews" element={<ReviewsPage />} />
+            <Route path="/support" element={<SupportPage />} />
           </Route>
 
           <Route element={<AdminLayout />}>
@@ -43,6 +48,7 @@ function App() {
             <Route path="/admin/products" element={<ProductManagement />} />
             <Route path="/admin/customers" element={<CustomerManagement/>}/>
             <Route path="/admin/orders" element={<OrderManagement />}/>
+            <Route path="/admin/settings" element={<Setting />} />
           </Route>
         </Routes>
       </BrowserRouter>
