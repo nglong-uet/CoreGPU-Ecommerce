@@ -16,6 +16,9 @@ public class Review {
 
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    private int likes = 0;
+    private int dislikes = 0;
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
@@ -36,6 +39,20 @@ public class Review {
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+
+    public int getLikes() {
+        return likes;
+    }
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public int getDislikes() {
+        return dislikes;
+    }
+    public void setDislikes(int dislikes) {
+        this.dislikes = dislikes;
+    }
 
     public Product getProduct() { return product; }
     public void setProduct(Product product) { this.product = product; }

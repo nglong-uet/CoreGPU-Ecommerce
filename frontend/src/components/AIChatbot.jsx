@@ -2,13 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import "../style/AIChatbot.css";
 
-export default function Chatbot() {
+export default function AIChatbot() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const messagesEndRef = useRef(null);
 
-  // Scroll xuống cuối
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -33,18 +32,15 @@ export default function Chatbot() {
     setMessages(newMessages);
     setInput('');
 
-    // Tin nhắn tạm trong khi chờ GPT trả lời
-    setMessages(prev => [...prev, { role: 'assistant', content: 'Đang xử lý...' }]);
+    setMessages(prev => [...prev, { role: 'assistant', content: 'Đang trả lời...' }]);
 
     try {
       const response = await axios.post("http://localhost:8080/api/chat", {
-        model: "gpt-3.5-turbo",
-        messages: newMessages,
+        message: content,
       });
 
-      const reply = response.data; // {role, content}
+      const reply = response.data; 
 
-      // Xóa "Đang xử lý..." và thêm câu trả lời thật
       setMessages([...newMessages, reply]);
     } catch (error) {
       console.error("Error:", error);
@@ -54,6 +50,20 @@ export default function Chatbot() {
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') sendMessage();
+  };
+
+  const handleQuickAction = (action) => {
+    const newMessages = [...messages, { role: 'user', content: action }];
+    setMessages(newMessages);
+
+    let botReply = "";
+    if (action === "Tư vấn") {
+      botReply = "Bạn muốn tôi tư vấn về sản phẩm nào ạ? (ví dụ: card đồ họa RTX 3060)";
+    } else if (action === "Hỗ trợ") {
+      botReply = "Bạn cần tôi hỗ trợ vấn đề gì ạ? (ví dụ: bảo hành, đơn hàng, thanh toán...)";
+    }
+
+    setMessages([...newMessages, { role: "assistant", content: botReply }]);
   };
 
   return (
@@ -88,11 +98,8 @@ export default function Chatbot() {
           </div>
 
           <div className="quick-buttons">
-            {['Tư vấn', 'Hỗ trợ'].map((label, i) => (
-              <button key={i} onClick={() => sendMessage(label)}>
-                {label}
-              </button>
-            ))}
+            <button onClick={() => handleQuickAction("Tư vấn")}>Tư vấn</button>
+            <button onClick={() => handleQuickAction("Hỗ trợ")}>Hỗ trợ</button>
           </div>
 
           <div className="chat-input">

@@ -15,9 +15,9 @@ function CheckoutPage() {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [provinces, setProvinces] = useState([]);
-  // const [districts, setDistricts] = useState([]);
+  const [districts, setDistricts] = useState([]);
   const [selectedProvince, setSelectedProvince] = useState("");
-  // const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [selectedDistrict, setSelectedDistrict] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("cod");
 
   useEffect(() => {
@@ -26,15 +26,15 @@ function CheckoutPage() {
       .catch((err) => console.error("Lỗi khi lấy tỉnh:", err));
   }, []);
 
-  // useEffect(() => {
-  //   if (selectedProvince) {
-  //     axios.get(`https://provinces.open-api.vn/api/p/${selectedProvince}?depth=2`)
-  //       .then((res) => setDistricts(res.data.districts))
-  //       .catch((err) => console.error("Lỗi khi lấy quận/huyện:", err));
-  //   } else {
-  //     setDistricts([]);
-  //   }
-  // }, [selectedProvince]);
+  useEffect(() => {
+    if (selectedProvince) {
+      axios.get(`https://provinces.open-api.vn/api/p/${selectedProvince}?depth=2`)
+        .then((res) => setDistricts(res.data.districts))
+        .catch((err) => console.error("Lỗi khi lấy quận/huyện:", err));
+    } else {
+      setDistricts([]);
+    }
+  }, [selectedProvince]);
 
   useEffect(() => {
     axios.get(`http://localhost:8080/api/cart/user/${user.id}`)
@@ -52,16 +52,15 @@ function CheckoutPage() {
   }, [items]);
 
   const handleCheckout = async () => {
-    if (!name || !phone || !address || !selectedProvince) {
+    if (!name || !phone || !address || !selectedProvince || !selectedDistrict) {
       alert("Vui lòng điền đầy đủ thông tin giao hàng.");
       return;
     }
 
-    const fullAddress = `${address}, ${provinces.find(p => p.code === parseInt(selectedProvince))?.name || ""}`;
+    const fullAddress = `${address}, ${provinces.find(p => p.code === parseInt(selectedProvince, selectedDistrict))?.name || ""}`;
 
     if (paymentMethod === "vnpay") {
       try {
-        // trước khi redirect sang VNPAY, gọi:
         const res = await axios.get("http://localhost:8080/api/payment/create", {
           params: {
             userId: user.id,
@@ -80,7 +79,12 @@ function CheckoutPage() {
 
     try {
       await axios.post(`http://localhost:8080/api/orders/checkout`, null, {
-        params: { userId: user.id, name, phone, address: fullAddress }
+        params: { 
+          userId: user.id, 
+          name, 
+          phone, 
+          address: fullAddress 
+        }
       });
       alert("Thanh toán thành công!");
       navigate("/thankyou");
@@ -132,7 +136,7 @@ function CheckoutPage() {
                   </select>
                 </div>
 
-                {/* <div className="col-md-6 mb-3">
+                <div className="col-md-6 mb-3">
                   <label className="form-label">Quận/Huyện *</label>
                   <select className="form-select" value={selectedDistrict} onChange={(e) => setSelectedDistrict(e.target.value)}>
                     <option value="">-- Chọn quận/huyện --</option>
@@ -140,7 +144,7 @@ function CheckoutPage() {
                       <option key={dist.code} value={dist.name}>{dist.name}</option>
                     ))}
                   </select>
-                </div> */}
+                </div>
               </div>
 
               <div className="mb-3">

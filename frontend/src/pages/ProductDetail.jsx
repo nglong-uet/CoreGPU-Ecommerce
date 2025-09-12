@@ -18,6 +18,8 @@ function ProductDetail() {
   const [newReview, setNewReview] = useState("");
   const [rating, setRating] = useState(5);
   const [visibleReviews, setVisibleReviews] = useState(3);
+  const storedUser = localStorage.getItem("user");
+  const userId = storedUser ? JSON.parse(storedUser).id : null;
 
   useEffect(() => {
     axios
@@ -80,8 +82,17 @@ function ProductDetail() {
         productId: product.id,
         quantity: quantity,
       });
-      localStorage.setItem("cartUpdated", Date.now());
-      toast.success("Đã thêm vào giỏ hàng");
+      let currentQty = parseInt(localStorage.getItem("cartQuantity") || "0");
+      localStorage.setItem("cartQuantity", currentQty + quantity);
+      window.dispatchEvent(new Event("cartUpdated"));
+
+      toast.success("Đã thêm vào giỏ hàng", {
+        autoClose: 2000, // 2 giây
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     } catch (err) {
       console.error("Lỗi thêm vào giỏ:", err);
       toast.error("Thêm vào giỏ hàng thất bại");
@@ -102,7 +113,10 @@ function ProductDetail() {
         productId: product.id,
         quantity: quantity,
       });
-      localStorage.setItem("cartUpdated", Date.now());
+      let currentQty = parseInt(localStorage.getItem("cartQuantity") || "0");
+      localStorage.setItem("cartQuantity", currentQty + quantity);
+      window.dispatchEvent(new Event("cartUpdated"));
+
       toast.success("Sản phẩm đã được thêm. Chuyển đến giỏ hàng...");
       setTimeout(() => navigate("/cart"), 1000);
     } catch (err) {
@@ -112,6 +126,26 @@ function ProductDetail() {
   };
 
   if (!product) return <div className="text-center mt-5">Đang tải...</div>;
+
+  const handleLike = async (id, userId) => {
+    try {
+      const res = await axios.put(`http://localhost:8080/api/reviews/${id}/toggle-like?userId=${userId}`);
+      const updatedReview = res.data;
+      setReviews(prev => prev.map(r => (r.id === id ? updatedReview : r)));
+    } catch (err) {
+      console.error("Error liking review:", err);
+    }
+  };
+
+  const handleDislike = async (id, userId) => {
+    try {
+      const res = await axios.put(`http://localhost:8080/api/reviews/${id}/toggle-dislike?userId=${userId}`);
+      const updatedReview = res.data;
+      setReviews(prev => prev.map(r => (r.id === id ? updatedReview : r)));
+    } catch (err) {
+      console.error("Error disliking review:", err);
+    }
+  };
 
   return (
     <>
@@ -222,24 +256,55 @@ function ProductDetail() {
             ) : (
               <div className="review-list">
                 {reviews.slice(0, visibleReviews).map((r, i) => (
-                  <div key={i} className="review-item">
+                  <div key={i} className="review-card">
                     <div className="review-header">
-                      <strong>{r.userName || "Người dùng ẩn danh"}</strong>
-                      <span className="review-rating">{"⭐".repeat(r.rating)}</span>
+                      <div>
+                        <div className="review-user">
+                          {r.userName || "Người dùng ẩn danh"}
+                        </div>
+                        <div className="review-date">
+                          {new Date(r.createdAt).toLocaleDateString()}
+                        </div>
+                      </div>
+                      <div className="review-rating">
+                        {Array.from({ length: 5 }).map((_, idx) => (
+                          <i
+                            key={idx}
+                            className={`fa-star ${idx < r.rating ? "fas" : "far"}`}
+                          ></i>
+                        ))}
+                      </div>
                     </div>
-                    <p className="review-comment">{r.comment}</p>
-                    <small className="text-muted">
-                      {new Date(r.createdAt).toLocaleDateString()}
-                    </small>
+
+                    <div className="review-content">{r.comment}</div>
+                    <div className="review-footer">
+                      <span
+                        className="like-btn"
+                        onClick={() => handleLike(r.id, userId)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        <i className="far fa-thumbs-up"></i> {r.likes || 0}
+                      </span>
+                      <span
+                        className="dislike-btn"
+                        onClick={() => handleDislike(r.id, userId)}
+                        style={{ cursor: "pointer", marginLeft: "10px" }}
+                      >
+                        <i className="far fa-thumbs-down"></i> {r.dislikes || 0}
+                      </span>
+                    </div>
                   </div>
                 ))}
+
                 {visibleReviews < reviews.length && (
-                  <button
-                    className="btn btn-link p-0 mt-2"
-                    onClick={() => setVisibleReviews(visibleReviews + 3)}
-                  >
-                    Xem thêm
-                  </button>
+                  <div className="text-center mt-3">
+                    <button
+                      className="btn btn-outline-primary"
+                      onClick={() => setVisibleReviews(visibleReviews + 3)}
+                    >
+                      Xem thêm đánh giá
+                    </button>
+                  </div>
                 )}
               </div>
             )}

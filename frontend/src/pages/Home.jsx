@@ -1,25 +1,27 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Banner from "../components/Banner";
 import "../style/Home.css";
 import usePageTitle from '../hooks/usePageTitle';
 
 function Home() {
   usePageTitle("Trang chủ | CoreGPU - Web bán card đồ hoạ");
+
+  const navigate = useNavigate();   
   const showcaseItems = [
     {
-      name: "NVIDIA",
+      name: "GIGABYTE",
       desc: "Infinity Loop Cooling",
-      image: "./images/nvidia.png",
+      image: "./images/gigabyte.jpg",
     },
     {
-      name: "AMD RADEON",
+      name: "MSI",
       desc: "The Next Frontier",
-      image: "./images/amd.png",
+      image: "./images/msi.jpg",
     },
     {
-      name: "ROG STRIX",
+      name: "ASUS",
       desc: "Take Flight",
-      image: "./images/rog.png",
+      image: "./images/asus.jpg",
     },
   ];
 
@@ -51,7 +53,7 @@ function Home() {
 ];
 
 const handleViewMore = (item) => {
-  console.log("View more:", item);
+  navigate(`/products?brand=${encodeURIComponent(item.name)}`);
 };
 
   return (
@@ -152,7 +154,7 @@ const handleViewMore = (item) => {
           </div>
 
           <div className="text-center mt-4">
-            <button className="btn btn-dark px-4 py-2">Xem tất cả đánh giá</button>
+            <Link to="/reviews" className="btn btn-dark px-4 py-2">Xem tất cả đánh giá</Link>
           </div>
         </div>
       </section>

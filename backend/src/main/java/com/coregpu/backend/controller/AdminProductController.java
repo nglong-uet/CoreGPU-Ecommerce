@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/admin/products")
@@ -46,10 +47,19 @@ public class AdminProductController {
             dto.setWarranty(product.getWarranty());
             dto.setInventory(product.getInventory());
 
-            List<String> imageUrls = product.getImages().stream()
-                    .map(img -> baseUrl + img.getImageUrl())
-                    .toList();
-            dto.setImages(imageUrls);
+            dto.setThumbnail(
+                    product.getImages().stream()
+                            .filter(ProductImage::isThumbnail)
+                            .findFirst()
+                            .map(img -> baseUrl + img.getImageUrl())
+                            .orElse(null)
+            );
+
+            dto.setImages(
+                    product.getImages().stream()
+                            .map(img -> baseUrl + img.getImageUrl())
+                            .collect(Collectors.toList())
+            );
 
             return dto;
         });

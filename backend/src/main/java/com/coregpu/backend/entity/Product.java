@@ -22,11 +22,10 @@ public class Product {
     private String warranty;
     private int inventory;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonManagedReference
     private List<ProductImage> images;
 
-    // Constructors
     public Product() {}
 
     public Product(String name, String brand ,String description, Double price, String memory, String product_condition, String connector, String warranty, int inventory) {

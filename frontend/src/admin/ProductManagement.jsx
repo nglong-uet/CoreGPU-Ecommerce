@@ -15,7 +15,7 @@ export default function ProductManagement() {
   const [form, setForm] = useState({
     id: null, name: "", brand: "", description: "", bus: "",
     product_condition:"", price: "", connector: "",
-    warranty: "", imageUrl: [], memory: "", inventory: ""
+    warranty: "", images: [], memory: "", inventory: ""
   });
 
   const [selectedImage, setSelectedImage] = useState(null);
@@ -85,7 +85,7 @@ export default function ProductManagement() {
     setForm({
       id: null, brand: "", description: "", memory: "", product_condition: "",
       bus: "", name: "", warranty: "", connector: "", price: "", inventory: "",
-      imageUrl: []
+      images: []
     });
   };
 

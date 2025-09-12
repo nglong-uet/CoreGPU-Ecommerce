@@ -40,13 +40,13 @@ export default function Navbar() {
       setCartQuantity(qty);
     };
 
-    updateCartQuantity();
-    
-    const interval = setInterval(updateCartQuantity, 500);
-    window.addEventListener("storage", updateCartQuantity);
+    updateCartQuantity(); 
+
+    window.addEventListener("cartUpdated", updateCartQuantity);
+    window.addEventListener("storage", updateCartQuantity); 
 
     return () => {
-      clearInterval(interval);
+      window.removeEventListener("cartUpdated", updateCartQuantity);
       window.removeEventListener("storage", updateCartQuantity);
     };
   }, []);

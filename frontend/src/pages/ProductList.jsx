@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import ProductCard from "../components/ProductCard";
 import axios from "axios";
 import "../style/ProductList.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import usePageTitle from "../hooks/usePageTitle";
 
 function ProductList() {
@@ -17,6 +17,15 @@ function ProductList() {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 20;
+  const location = useLocation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const brand = params.get("brand");
+    if (brand) {
+      setBrandFilter(brand);
+    }
+  }, [location.search]);
 
   useEffect(() => {
     axios.get("http://localhost:8080/api/products")
@@ -136,14 +145,10 @@ function ProductList() {
                 </button>
               </div>
               <div className="col">
-                <select
-                  className="form-select"
-                  value={conditionFilter}
-                  onChange={(e) => setConditionFilter(e.target.value)}
-                >
+                <select className="form-select" value={conditionFilter} onChange={(e) => setConditionFilter(e.target.value)}>
                   <option value="">Tình trạng</option>
                   <option value="Mới">Mới</option>
-                  <option value="Đã qua sử dụng">Đã qua sử dụng</option>
+                  <option value="Cũ">Đã qua sử dụng</option>
                 </select>
               </div>
               <div className="col">
@@ -159,8 +164,7 @@ function ProductList() {
               <div className="col">
                 <select className="form-select" value={brandFilter} onChange={(e) => setBrandFilter(e.target.value)}>
                   <option value="">Hãng</option>
-                  <option value="NVIDIA">NVIDIA</option>
-                  <option value="AMD">AMD</option>
+                  <option value="OCPC">OCPC</option>
                   <option value="ASUS">ASUS</option>
                   <option value="MSI">MSI</option>
                   <option value="Sapphire">Sapphire</option>
@@ -169,11 +173,7 @@ function ProductList() {
                 </select>
               </div>
               <div className="col">
-                <select
-                  className="form-select"
-                  value={memoryFilter}
-                  onChange={(e) => setMemoryFilter(e.target.value)}
-                >
+                <select className="form-select" value={memoryFilter} onChange={(e) => setMemoryFilter(e.target.value)}>
                   <option value="">Bộ nhớ</option>
                   <option value="4GB">4GB</option>
                   <option value="6GB">6GB</option>

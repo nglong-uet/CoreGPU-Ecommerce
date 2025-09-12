@@ -50,7 +50,6 @@ public class ProductService {
                     Optional<ProductImage> thumbnail = productImageRepository.findThumbnailByProductId(product.getId());
                     dto.setThumbnail(thumbnail.map(img -> baseUrl + img.getImageUrl()).orElse(null));
 
-                    // List ảnh
                     List<String> imageUrls = product.getImages().stream()
                             .map(img -> baseUrl + img.getImageUrl())
                             .collect(Collectors.toList());
@@ -87,7 +86,6 @@ public class ProductService {
                     Optional<ProductImage> thumbnail = productImageRepository.findThumbnailByProductId(product.getId());
                     dto.setThumbnail(thumbnail.map(img -> baseUrl + img.getImageUrl()).orElse(null));
 
-                    // Ảnh chi tiết (tùy cần)
                     List<String> imageUrls = product.getImages().stream()
                             .map(img -> baseUrl + img.getImageUrl())
                             .collect(Collectors.toList());
@@ -100,8 +98,16 @@ public class ProductService {
 
     public Product saveProduct(Product product) {
         if (product.getImages() != null) {
+            boolean first = true;
             for (ProductImage img : product.getImages()) {
                 img.setProduct(product);
+
+                if (first) {
+                    img.setThumbnail(true);
+                    first = false;
+                } else {
+                    img.setThumbnail(false);
+                }
             }
         }
         return productRepository.save(product);
@@ -119,6 +125,19 @@ public class ProductService {
             product.setConnector(updatedProduct.getConnector());
             product.setWarranty(updatedProduct.getWarranty());
             product.setInventory(updatedProduct.getInventory());
+
+            product.getImages().clear();
+
+            if (updatedProduct.getImages() != null && !updatedProduct.getImages().isEmpty()) {
+                boolean first = true;
+                for (ProductImage img : updatedProduct.getImages()) {
+                    img.setProduct(product);
+                    img.setThumbnail(first);
+                    first = false;
+                    product.getImages().add(img);
+                }
+            }
+
             return productRepository.save(product);
         }).orElseThrow(() -> new RuntimeException("Product not found"));
     }
@@ -138,5 +157,29 @@ public class ProductService {
     @PostMapping
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
         return ResponseEntity.ok(productRepository.save(product));
+    }
+
+    public List<ProductDTO> searchProductsByPriceRange(Double minPrice, Double maxPrice) {
+        List<Product> products;
+
+        if (minPrice != null && maxPrice != null) {
+            products = productRepository.findByPriceBetween(minPrice, maxPrice);
+        } else if (minPrice != null) {
+            products = productRepository.findByPriceGreaterThanEqual(minPrice);
+        } else if (maxPrice != null) {
+            products = productRepository.findByPriceLessThanEqual(maxPrice);
+        } else {
+            products = productRepository.findAll();
+        }
+
+        return products.stream().map(product -> {
+            ProductDTO dto = new ProductDTO();
+            dto.setId(product.getId());
+            dto.setName(product.getName());
+            dto.setPrice(product.getPrice());
+            dto.setMemory(product.getMemory());
+            dto.setBrand(product.getBrand());
+            return dto;
+        }).collect(Collectors.toList());
     }
 }

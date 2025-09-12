@@ -53,4 +53,38 @@ public class ReviewController {
         Review saved = reviewService.save(review);
         return ResponseEntity.ok(new ReviewDTO(saved));
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<ReviewDTO>> getAllReviews() {
+        List<Review> reviews = reviewService.getAllReviews();
+        List<ReviewDTO> dtos = reviews.stream().map(ReviewDTO::new).toList();
+        return ResponseEntity.ok(dtos);
+    }
+
+//    @PutMapping("/{id}/like")
+//    public ResponseEntity<ReviewDTO> likeReview(@PathVariable Long id) {
+//        Review review = reviewService.findById(id);
+//        review.setLikes(review.getLikes() + 1);
+//        Review updated = reviewService.save(review);
+//        return ResponseEntity.ok(new ReviewDTO(updated));
+//    }
+//
+//    @PutMapping("/{id}/dislike")
+//    public ResponseEntity<ReviewDTO> dislikeReview(@PathVariable Long id) {
+//        Review review = reviewService.findById(id);
+//        review.setDislikes(review.getDislikes() + 1);
+//        Review updated = reviewService.save(review);
+//        return ResponseEntity.ok(new ReviewDTO(updated));
+//    }
+
+    @PutMapping("/{id}/toggle-like")
+    public ResponseEntity<ReviewDTO> toggleLike(@PathVariable Long id, @RequestParam Long userId) {
+        return ResponseEntity.ok(reviewService.toggleReaction(id, userId, 1));
+    }
+
+    @PutMapping("/{id}/toggle-dislike")
+    public ResponseEntity<ReviewDTO> toggleDislike(@PathVariable Long id, @RequestParam Long userId) {
+        return ResponseEntity.ok(reviewService.toggleReaction(id, userId, -1));
+    }
+
 }

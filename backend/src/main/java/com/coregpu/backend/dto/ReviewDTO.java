@@ -9,6 +9,9 @@ public class ReviewDTO {
     private int rating;
     private String comment;
     private String userName;
+    private String productName;
+    private int likes;
+    private int dislikes;
     private LocalDateTime createdAt;
 
     public ReviewDTO() {}
@@ -18,6 +21,9 @@ public class ReviewDTO {
         this.rating = review.getRating();
         this.comment = review.getComment();
         this.userName = review.getUser() != null ? review.getUser().getName() : "Người dùng ẩn danh";
+        this.productName = review.getProduct() != null ? review.getProduct().getName() : "Sản phẩm không xác định";
+        this.likes = review.getLikes();
+        this.dislikes = review.getDislikes();
         this.createdAt = review.getCreatedAt();
     }
 
@@ -30,6 +36,24 @@ public class ReviewDTO {
     public void setComment(String comment) { this.comment = comment; }
     public String getUserName() { return userName; }
     public void setUserName(String userName) { this.userName = userName; }
+    public String getProductName() {
+        return productName;
+    }
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+    public int getLikes() {
+        return likes;
+    }
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+    public int getDislikes() {
+        return dislikes;
+    }
+    public void setDislikes(int dislikes) {
+        this.dislikes = dislikes;
+    }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 }

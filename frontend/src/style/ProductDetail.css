@@ -111,17 +111,6 @@
   padding: 12px 0;
 }
 
-.review-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.review-rating {
-  color: #f39c12;
-  font-size: 1.1rem;
-}
-
 .review-comment {
   margin: 6px 0;
 }
@@ -143,4 +132,76 @@
 
 .star:hover {
   color: #ffb400;
+}
+
+.review-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  transition: box-shadow 0.2s;
+}
+
+.review-card:hover {
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.review-user {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #222;
+}
+
+.review-date {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.review-rating {
+  display: flex;
+  gap: 3px;
+  font-size: 1.1rem;
+}
+
+.review-rating .fas {
+  color: #ffc107; 
+}
+
+.review-rating .far {
+  color: rgba(0,0,0,0.2);
+}
+
+.review-content {
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.6;
+  margin-top: 10px;
+}
+
+
+.review-footer {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.like-btn, .dislike-btn {
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.like-btn:hover {
+  color: #007bff;
+}
+
+.dislike-btn:hover {
+  color: #dc3545;
 }
