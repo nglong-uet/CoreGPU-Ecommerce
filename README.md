@@ -1,5 +1,5 @@
 # 🛒 CoreGPU Fullstack E-Commerce Project
-![Home](D:\CoreGPU-Ecommerce\frontend\public\images\Home.png)
+![Home](<frontend\public\images\Home.png>)
 Welcome to the Fullstack E-Commerce Shopping Project repository! This project is a work in progress and aims to build a comprehensive e-commerce application using React.js for the front-end and Spring Boot for the backend. Once completed, it will offer a complete online shopping experience with features like product browsing, cart management, and order processing.
 
 # 🛠️ Technologies Being Used
